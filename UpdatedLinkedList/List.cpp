@@ -8,7 +8,7 @@ using namespace std;
 template <class listdata>
 List<listdata>::List(){
   head = tail = iterator = NULL;
-  length = 0;
+  size = 0;
 }
 
 template <class listdata>
@@ -162,7 +162,7 @@ int List<listdata>::binarySearch(int low, int high, listdata data) const{
     }
     if(it->data == data){
       return mid;
-    }else if(data < temp->data){
+    }else if(data < it->data){
       return binarySearch(low, mid - 1, data);
     }else{
       return binarySearch(mid + 1, high, data);
@@ -265,9 +265,9 @@ void List<listdata>::reverseIterator(){
 template <class listdata>
 void List<listdata>::removeIterator(){
   assert(iterator != NULL);
-  if(iterator == first){
+  if(iterator == head){
     removeFirst();
-  }else if(iterator == last){
+  }else if(iterator == tail){
     removeLast();
   }else{
     iterator->prev->next = iterator->next;
@@ -281,7 +281,7 @@ void List<listdata>::removeIterator(){
 template <class listdata>
 void List<listdata>::insertIterator(listdata data){
   assert(iterator != NULL);
-  if(iterator == last){
+  if(iterator == tail){
     insertLast(data);
   }else{
     Node *newNode = new Node(data);
@@ -306,7 +306,10 @@ void List<listdata>::advanceToIndex(int index){
 
 template <class listdata>
 void List<listdata>::printList() const{
-  assert(!isEmpty());
+  // assert(!isEmpty());
+  if(isEmpty()){
+    cout << "List is empty!";
+  }
   Node *it = head;
   while(it != NULL){
     cout << it->data << " ";
@@ -325,5 +328,5 @@ void List<listdata>::reversePrint(Node *node) const{
 
 template <class listdata>
 void List<listdata>::reversePrint() const{
-  reversPrint(head);
+  reversePrint(head);
 }
