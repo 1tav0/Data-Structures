@@ -330,3 +330,40 @@ template <class listdata>
 void List<listdata>::reversePrint() const{
   reversePrint(head);
 }
+
+template <class listdata>
+void List<listdata>::printNumberedList(){
+  Node *it = head;
+  int index = 1;
+  while(it != NULL){
+    cout << index << ". " << it->data << endl;
+    it = it->next;
+    index++;
+  }
+  cout << endl;
+}
+
+template <class listdata>
+void List<listdata>::move(int sourceLine, int destinationLine){
+  assert(!isEmpty());
+  if(size==1){
+    cout << "Already in destinationLine" << endl;
+  }
+  startIterator();
+  for (int i = 1; i < sourceLine; i++){
+    advanceIterator();
+  }
+  listdata storeData = getIterator();
+  removeIterator();
+
+  if(destinationLine > sourceLine){
+    destinationLine--;
+  }
+
+  startIterator();
+  for (int i = 1; i < destinationLine; i++){
+    advanceIterator();
+  }
+
+  insertIterator(storeData);
+}

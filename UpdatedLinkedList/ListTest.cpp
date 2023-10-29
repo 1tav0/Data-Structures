@@ -291,5 +291,8 @@ int main(){
   cout << "Searching for element 12 in L5: ";
   cout << "is at index " << L5.linearSearch(12) << endl;
 
+  cout << "\n***Testing printNumberedList()****\n";
+  L5.printNumberedList();
+
   return 0;
 }

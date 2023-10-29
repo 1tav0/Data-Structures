@@ -119,8 +119,10 @@ class List{
    	//Nodes are numbered starting at 1 through the size of the List
    	//Pre: size != 0
    	//Pre: index <= size
+    void move(int sourceLine, int destinationLine);
+    // moves data from sourceLine to destinationLine
 
-  /**Additional List Operations*/
+    /**Additional List Operations*/
 
     void printList() const;
     //Prints to the console the value of each data in the list sequentially
@@ -128,6 +130,7 @@ class List{
     void reversePrint() const;
     //Wrapper function that calls the reverse helper function to print a list in reverse
     //prints nothing if the List is empty
+    void printNumberedList();
 };
 
 #endif
