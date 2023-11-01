@@ -123,14 +123,24 @@ void BST<bstdata>::freeNode(Node *root){
   if(root==NULL){
       return;
   }else{
-    free(root->left);
-    free(root->right);
+    freeNode(root->left);
+    freeNode(root->right);
     delete (root);
   }
 }
 
+/*In the copy constructor BST<bstdata>::BST(const BST &bst), you want to create a new binary search tree (this) by copying the nodes from the bst tree.
+
+Without root = NULL;, your binary search tree (this) starts with its root member pointing to some memory location, even if it's uninitialized. This means it could be pointing to random memory or data.
+
+When you call the copyNode(bst.root) function inside the copy constructor, it recursively tries to copy nodes from bst into the this tree.
+
+If the root of the this tree isn't set to NULL, the copying process might encounter uninitialized memory or data in the this tree's structure (as this is a copy of bst), causing a segmentation fault because it tries to access or manipulate memory it shouldn't.
+
+By adding root = NULL;, you explicitly initialize the root of the new tree (this) to be an empty tree with no nodes. This ensures that the copying process starts with a clean slate and doesn't try to reference or modify any uninitialized or random memory locations.*/
 template <class bstdata>
 BST<bstdata>::BST(const BST &bst){
+  root = NULL; //Create an empty tree
   copyNode(bst.root);
 }
 
@@ -252,6 +262,7 @@ bool BST<bstdata>::search(bstdata data) const{
   }else{
     return searchNode(root, data);
   }
+  
 }
 
 template <class bstdata>
@@ -339,13 +350,12 @@ bool BST<bstdata>::isEmpty() const{
 
 template <class bstdata>
 void BST<bstdata>::getSize(Node *root, int &size) const{
-  if(root==NULL){
-    size = 0;
-  }else{
+  if(root != NULL){
     if(root->left){
       getSize(root->left, ++size);
-    }else if(root->right){
-      getSize(root->size, ++size);
+    }
+    if(root->right){
+      getSize(root->right, ++size);
     }
   }
 }
@@ -354,7 +364,7 @@ template <class bstdata>
 int BST<bstdata>::getSize() const{
   int size = 0;
   if(!isEmpty()){
-    return getSize(root, ++size);
+    getSize(root, ++size);
   }
   return size;
 }
@@ -366,12 +376,12 @@ int BST<bstdata>::getHeight(Node *root) const {
   }else if(getHeight(root->right) > getHeight(root->left)){
     return 1 + getHeight(root->right);
   }else{
-    return 1 + getHeigh(root->left);
+    return 1 + getHeight(root->left);
   }
 }
 
 template <class bstdata>
 int BST<bstdata>:: getHeight() const{
-  return getHeigh(root);
+  return getHeight(root);
 }
 #endif
